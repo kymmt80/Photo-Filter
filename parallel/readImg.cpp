@@ -87,17 +87,14 @@ void getPixlesFromBMP24(int end, int rows, int cols, char *fileReadBuffer)
         switch (k)
         {
         case 0:
-          cout<<int(fileReadBuffer[end-count])+127<<":0 ";
           photo[0][i][j]=fileReadBuffer[end - count];
           // fileReadBuffer[end - count] is the red value
           break;
         case 1:
-          cout<<int(fileReadBuffer[end-count])+127<<":1 ";
           photo[1][i][j]=fileReadBuffer[end - count];
           // fileReadBuffer[end - count] is the green value
           break;
         case 2:
-          cout<<int(fileReadBuffer[end-count])+127<<":2 ";
           photo[2][i][j]=fileReadBuffer[end - count];
           // fileReadBuffer[end - count] is the blue value
           break;
