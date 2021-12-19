@@ -2,7 +2,13 @@
 #include <unistd.h>
 #include <fstream>
 #include <vector>
+#include <sys/time.h>
+#include <ctime>
+#include <chrono>
 
+using std::chrono::system_clock;
+using std::chrono::duration_cast;
+using std::chrono::milliseconds;
 using std::cout;
 using std::endl;
 using std::ifstream;
@@ -288,6 +294,8 @@ int main(int argc, char *argv[])
   int bufferSize;
   char *fileName = argv[1];
   char outFile[]="out.bmp";
+  //time_t t1,t2,t3,t4,t5,t6,t7;
+  auto t0=duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
   if (!fillAndAllocate(fileBuffer, fileName, rows, cols, bufferSize))
   {
     cout << "File read error" << endl;
@@ -297,15 +305,20 @@ int main(int argc, char *argv[])
   photo.push_back(page);
   photo.push_back(page);
   photo.push_back(page);
+  //auto t1=duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
   getPixlesFromBMP24(bufferSize,rows,cols,fileBuffer);
+  //auto t2=duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
   smoothFilter();
+  //auto t3=duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
   sepiaFilter();
+  //auto t4=duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
   meanFilter();
+  //auto t5=duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
   xFilter();
+  //auto t6=duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
   writeOutBmp24(fileBuffer,outFile,bufferSize);
-  // read input file
-  // apply filters
-  // write output file
-
+  auto t7=duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+  //cout<<t1-t0<<":"<<t2-t1<<":"<<t3-t2<<":"<<t4-t3<<":"<<t5-t4<<":"<<t6-t5<<":"<<t7-t6<<":"<<t7-t0;
+  cout<<t7-t0<<endl;
   return 0;
 }

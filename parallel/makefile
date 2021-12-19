@@ -1,4 +1,4 @@
 all: imageFilters.out
 
 imageFilters.out: readImg.cpp
-	g++ readImg.cpp -o imageFilters.out
+	g++ readImg.cpp -pthread -o imageFilters.out
